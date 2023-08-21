@@ -7,7 +7,7 @@ services:
     volumes:
       - ./data:/data
     environment:
-      # THE USER ID OF THE TWITTER ACCOUNT TO CROSSPOST FROM (REQUIRED)
+      # THE USER ID OF THE TWITTER ACCOUNT TO CROSSPOST FROM (Can find it on tweeterid.com) (REQUIRED)
       - TWITTER_USER_ID=
       # THE TWITTER HANDLE (WITHOUT @) OF THE TWITTER ACCOUNT TO CROSSPOST FROM (REQUIRED)
       - TWITTER_USER_HANDLE=
