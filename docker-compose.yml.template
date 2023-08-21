@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  tweet_crossposter:
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    environment:
+      - TWITTER_USER_ID=
+      - TWITTER_USER_HANDLE=
+      - TWITTER_LOGIN_EMAIL=
+      - TWITTER_LOGIN_HANDLE=
+      - TWITTER_LOGIN_PASSWORD=
+      - BLUESKY_USER_HANDLE=
+      - BLUESKY_USER_PASSWORD=
+      - MASTODON_INSTANCE_URL=
+      - MASTODON_ACCESS_TOKEN=
+      - SYNC_INTERVAL=900000
+      - SYNC_AFTER_TIMESTAMP=0
+
