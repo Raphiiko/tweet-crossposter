@@ -20,7 +20,6 @@ export class MediaCacheService {
 
   public async cacheMedia(url: string): Promise<string> {
     if (this.cache.has(url)) return this.cache.get(url);
-    console.log('Caching media: ' + url);
     const response: IncomingMessage = await new Promise((res) =>
       https.get(url, (response) => res(response)),
     );
@@ -31,15 +30,11 @@ export class MediaCacheService {
     await new Promise((res) => filePath.on('finish', res));
     filePath.close();
     this.cache.set(url, path);
-    console.log('Cached media: ' + url + ' at ' + path);
     return path;
   }
 
   public uncacheMedia(url: string) {
     if (!this.cache.has(url)) return;
-    console.log(
-      'Removing media from cache: ' + url + ' at ' + this.cache.get(url),
-    );
     fs.unlinkSync(this.cache.get(url));
     this.cache.delete(url);
   }

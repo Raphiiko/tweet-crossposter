@@ -68,6 +68,7 @@ export class SyncService {
   }
 
   private async sync() {
+    console.log('Checking for new tweets...');
     const tweets = await this.twitter.getRecentTweets();
     // Filter out tweets that have already been synced
     let toSync = (
@@ -89,8 +90,21 @@ export class SyncService {
     toSync = toSync.filter((t) => t.timestamp >= this.syncAfterTimestamp);
     // Sort toSync by timestamp ascending
     toSync = toSync.sort((a, b) => a.timestamp - b.timestamp);
+    if (toSync.length === 0) {
+      console.log('No new tweets to sync');
+      return;
+    } else {
+      console.log('Found ' + toSync.length + ' new tweets to sync!');
+    }
+
     // Sync tweets
     for (const tweet of toSync) {
+      console.log(
+        'Syncing tweet: https://twitter.com/' +
+          process.env.TWITTER_USER_HANDLE +
+          '/status/' +
+          tweet.id,
+      );
       await Promise.all(
         (tweet.photos || []).map((photo) =>
           this.mediaCache.cacheMedia(photo.url),
@@ -115,7 +129,15 @@ export class SyncService {
       } catch (e) {
         console.error('Could not sync tweet to Bluesky: ' + e);
       }
-      if (syncedToBluesky || syncedToMastodon) this.markTweetSynced(tweet.id);
+      if (syncedToBluesky || syncedToMastodon) {
+        this.markTweetSynced(tweet.id);
+        console.log(
+          'Synced tweet: https://twitter.com/' +
+            process.env.TWITTER_USER_HANDLE +
+            '/status/' +
+            tweet.id,
+        );
+      }
       await Promise.all(
         (tweet.photos || []).map((photo) =>
           this.mediaCache.uncacheMedia(photo.url),
