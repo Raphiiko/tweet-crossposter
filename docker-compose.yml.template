@@ -7,11 +7,13 @@ services:
     volumes:
       - ./data:/data
     environment:
-      # THE USER ID OF THE TWITTER ACCOUNT TO CROSSPOST FROM (Can find it on tweeterid.com) (REQUIRED)
+      # The user id of the Twitter account to crosspost from (Can find it on tweeterid.com) (REQUIRED)
       - TWITTER_USER_ID=
-      # THE TWITTER HANDLE (WITHOUT @) OF THE TWITTER ACCOUNT TO CROSSPOST FROM (REQUIRED)
+      # The twitter handle (without the @) of the twitter account to crosspost from (REQUIRED)
       - TWITTER_USER_HANDLE=
-      # The email address of the Twitter account to use for scraping. Does not have to be the same twitter account. Cannot have 2FA enabled. (REQUIRED)
+      # The email address of the Twitter account to use for scraping. (REQUIRED)
+      # This does not have to be the same Twitter account, and probably should not be, considering:
+      # This account cannot have 2FA enabled.
       - TWITTER_LOGIN_EMAIL=
       # The handle of the Twitter account to use for scraping. (REQUIRED)
       - TWITTER_LOGIN_HANDLE=
@@ -21,12 +23,15 @@ services:
       - BLUESKY_USER_HANDLE=
       # The password of the Bluesky user to crosspost to (REQUIRED)
       - BLUESKY_USER_PASSWORD=
-      # The URL of the Mastodon instance to crosspost to. Should _not_ end with a /. (REQUIRED)
+      # The URL of the Mastodon instance to crosspost to. Should _not_ end with a /. (e.g. https://mstdn.social) (REQUIRED)
       - MASTODON_INSTANCE_URL=
-      # The access token to authenticate with the Mastodon instance (Create an app in your Mastodon instance and you'll find it). (REQUIRED)
+      # The access token to authenticate with the Mastodon instance (REQUIRED)
+      # Create an app in https://<your-mastodon-instance>/settings/applications and you'll find it.
       - MASTODON_ACCESS_TOKEN=
-      # The interval at which the Twitter profile is scraped (Default every 15 minutes)
+      # The interval (in ms) at which the Twitter profile is scraped (Default every 15 minutes)
       - SYNC_INTERVAL=900000
-      # The minimum timestamp for tweets to be considered scrapable. Tweets before this time will be ignored. (0 = the time at which the application started).
+      # The minimum timestamp (Unix timestamp, seconds) for tweets to be considered scrapable.
+      # Tweets from before this timestamp will be ignored.
+      # If set to 0, the time at which the application started will be used instead.
       - SYNC_AFTER_TIMESTAMP=0
 
