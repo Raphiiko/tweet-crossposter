@@ -7,15 +7,26 @@ services:
     volumes:
       - ./data:/data
     environment:
+      # THE USER ID OF THE TWITTER ACCOUNT TO CROSSPOST FROM (REQUIRED)
       - TWITTER_USER_ID=
+      # THE TWITTER HANDLE (WITHOUT @) OF THE TWITTER ACCOUNT TO CROSSPOST FROM (REQUIRED)
       - TWITTER_USER_HANDLE=
+      # The email address of the Twitter account to use for scraping. Does not have to be the same twitter account. Cannot have 2FA enabled. (REQUIRED)
       - TWITTER_LOGIN_EMAIL=
+      # The handle of the Twitter account to use for scraping. (REQUIRED)
       - TWITTER_LOGIN_HANDLE=
+      # The password of the Twitter account to use for scraping. (REQUIRED)
       - TWITTER_LOGIN_PASSWORD=
+      # The handle (or email) of the Bluesky user to crosspost to (REQUIRED)
       - BLUESKY_USER_HANDLE=
+      # The password of the Bluesky user to crosspost to (REQUIRED)
       - BLUESKY_USER_PASSWORD=
+      # The URL of the Mastodon instance to crosspost to. Should _not_ end with a /. (REQUIRED)
       - MASTODON_INSTANCE_URL=
+      # The access token to authenticate with the Mastodon instance (Create an app in your Mastodon instance and you'll find it). (REQUIRED)
       - MASTODON_ACCESS_TOKEN=
+      # The interval at which the Twitter profile is scraped (Default every 15 minutes)
       - SYNC_INTERVAL=900000
+      # The minimum timestamp for tweets to be considered scrapable. Tweets before this time will be ignored. (0 = the time at which the application started).
       - SYNC_AFTER_TIMESTAMP=0
 
